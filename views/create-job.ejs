@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MJ CAR WASH - CREATE JOB</title>
+    <link rel="stylesheet" href="/style.css">
+    <style>
+        form{
+            display: flex;
+            flex-direction: column;
+        }
+    </style>
+</head>
+<body>
+    <form action="/save-job" method="post">
+
+    <label for="name">Name</label>
+    <input type="text" name="name" id="">
+    
+    <label for="phone_nbr">Phone #</label>
+    <input type="text" name="phone_nbr" id="">
+    
+    <label for="license_nbr">License #</label>
+    <input type="text" name="license_nbr" id="">
+    
+    <label for="vehicle_desc">Vehicle Type</label>
+    <select name="vehicle_desc" id="">
+        <option value="" >Select One</option>
+        <% for(let i = 0; i < data.length; i++) { %>
+            <option value="<%= data[i].id %>"><%= data[i].vehicle_desc %></option>
+        <% } %>    
+    </select>
+
+    <label for="make_name">Make</label>
+    <select name="make_name" id="">
+        <option value="" >Select One</option>
+        <% for(let i = 0; i < make.length; i++) { %>
+            <option value="<%= make[i].id %>"><%= make[i].name %></option>
+        <% } %>    
+    </select> 
+
+    <label for="model">Model </label>
+    <input type="text" name="model" id="">
+   
+    <label for="color">Color </label>
+    <input type="text" name="color" id="">
+   
+    <label for="date">Date </label>
+    <input type="date" name="date" id="">
+    
+    <input type="submit" value="Save">
+    </form>
+
+    <a href="/">Home</a>
+</body>
+</html>

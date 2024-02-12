@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div class="container">
+        
+        <h1>VIEW CUSTOMER</h1><br><br>
+        <b>ID:</b> &nbsp; <%= data.id %> <br><br>
+        <b>Name :</b> &nbsp; <%= data.name %> <br><br>
+        <b>Phone # :</b> &nbsp; <%= data.phone_nbr %> <br><br>
+        <b>License #:</b> &nbsp; <%= data.license_nbr%> <br><br>
+        <b>Vehicle Type :</b> &nbsp; <%= data.vehicle_desc %> <br><br>
+        <b>Make :</b> &nbsp; <%= data.make_name %> <br><br>
+        <b>Model :</b> &nbsp; <%= data.model %> <br><br>
+        <b>Colour :</b> &nbsp; <%= data.color %> <br><br>
+        <b>Date :</b> &nbsp; <%= new Date (data.date).toLocaleDateString('en-US',{month:'short', day:'numeric', year:'numeric', timeZone: 'UTC'}) %> <br><br>
+            <br><br>
+            
+        </div>
+        <a id="btn2" href="/">&larr; MAIN INFO PAGE</a>
+
+</body>
+</html>

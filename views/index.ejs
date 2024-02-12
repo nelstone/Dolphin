@@ -1,0 +1,44 @@
+<h2> MJ CAR WASH</h2>
+    
+<% if(data.length > 0) {%>
+<div style="margin-top: 25px;margin-left: 10px;">
+  <a href="/create-job" class="btn btn-lg primary">Create Job</a>       
+</div>      
+<table>
+<tr>
+    <td class="bold-cell">Name</td>
+    <td class="bold-cell">Phone#</td>
+    <td class="bold-cell">License</td>
+    <td class="bold-cell">Type</td>
+    <td class="bold-cell">Make</td>
+    <td class="bold-cell">Model</td>
+    <td class="bold-cell">Color</td>
+    <td class="bold-cell">Date</td>
+    <td class="bold-cell">Action</td>
+</tr>
+
+<% for(let i = 0; i < data.length; i++) { %>
+    <tr>
+       <td><%= data[i].name %></td>   
+       <td><%= data[i].phone_nbr %></td>   
+       <td><%= data[i].license_nbr %></td>   
+       <td><%= data[i].vehicle_desc %></td>   
+       <td><%= data[i].make_name %></td>   
+       <td><%= data[i].model %></td>   
+       <td><%= data[i].color %></td>   
+       <td><%= new Date(data[i].date).toLocaleDateString('en-US',{month: 'short', day:'numeric', year:'numeric', timeZone: 'UTC'})  %></td>   
+       <td>
+        <a href="/job-edit/<%= data[i].id %>" class="btn primary btn-sm">Edit</a>
+        <a href="/job-view/<%= data[i].id %>" class="btn success  btn-sm">View</a>
+        <a href="/job-delete/<%= data[i].id %>" class="btn danger  btn-sm">Delete</a>
+       </td>   
+    </tr>
+<% } %>
+</table>
+<% }else{ %>
+<b>ID #</b> <%= data.stud_id_nbr %> <br>
+<b>Name</b> <%= data.stud_nm %><br>
+<b>DOB</b> <%= new Date(data.dob).toLocaleDateString('en-US',{month: 'short', day:'numeric', year:'numeric', timeZone: 'UTC'}) %><br>
+<b>Email</b> <%= data.email %><br>
+
+<% } %>

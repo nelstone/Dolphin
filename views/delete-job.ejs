@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <form action="/delete-job" method="post">
+        <input type="hidden" name="id" readonly value="<%= data.id %>">
+    
+        <label for="name">Name</label>
+        <input type="text" name="name" id="" readonly value="<%= data.name %>">
+        
+        <label for="phone_nbr">Phone #</label>
+        <input type="text" name="phone_nbr" id="" readonly value="<%= data.phone_nbr %>">
+        
+        <label for="license_nbr">License #</label>
+        <input type="text" name="license_nbr" id="" readonly  value="<%= data.license_nbr%>">
+        
+        <label for="vehicle_desc">Vehicle Type</label>
+        <select name="vehicle_desc" id=""readonly>
+            <% for(let i = 0; i < v_type.length; i++) { %>
+                <%  if(v_type[i].id == data.vehicle_type_id) { %>
+                    <option value="<%= v_type[i].id %>" selected><%= v_type[i].vehicle_desc %></option>
+                <% } %>    
+                    <option value="<%= v_type[i].id %>"><%= v_type[i].vehicle_desc %></option>
+            <% } %>    
+        </select>
+    
+        <label for="make_name">Make</label>
+        <select name="make_name" id=""readonly>
+            <% for(let i = 0; i < v_make.length; i++) { %>
+                <%  if(v_make[i].id == data.make_id) { %>
+                    <option value="<%= v_make[i].id %>" selected><%= v_make[i].name %></option>
+                <% } %>    
+                    <option value="<%= v_make[i].id %>"><%= v_make[i].name %></option>
+            <% } %>    
+        </select>
+    
+        <label for="model">Model </label>
+        <input type="text" name="model" id="" readonly value="<%= data.model%>">
+       
+        <label for="color">Color </label>
+        <input type="text" name="color" id="" readonly value="<%= data.color %>">
+       
+        <label for="date">Date </label> 
+        <input type="date" name="date" id="" readonly value="<%= data.date%>">
+        
+        <input type="submit" value="Delete">
+        </form>
+    
+        <a href="/">Home</a>
+
+</body>
+</html>
