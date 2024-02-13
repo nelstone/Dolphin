@@ -26,10 +26,10 @@
     display: flex;
     align-items: center;
     justify-content: space-around;
-    /* background-color: #fff; */
-    background-image: url(/sea-1850228_1920.jpg);
+    background: linear-gradient(#fff, skyblue) ;
+    /* background-image: url(/sea-1850228_1920.jpg);
     background-size: cover;
-    background-repeat: no-repeat;
+    background-repeat: no-repeat; */
     box-shadow: 0px 4px 8px 0px;
     z-index: 5;
 }
@@ -68,7 +68,7 @@ nav a{
     background-color: #fff;
 }
 .b0x:hover{
-    background-color: #1dc0c5;
+    background-color: skyblue;
     cursor: pointer;
 }
 #hab{
