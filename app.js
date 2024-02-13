@@ -1,9 +1,11 @@
 import express from 'express';
 import morgan from 'morgan';
-import { getAllJobs, getSingleJob, createJob, getVehicleTypes, getVehicleMakes, updateJob, deleteJob } from './data/database.js';
-
+import { getAllBookings, getSingleBooking, newBooking, getVehicleTypes, getVehicleMakes, updateJob, deleteJob } from './data/database.js';
 
 const app = express();
+import {bookingRoute} from './routes/bookingRoute.js'
+app.use("/Bookings", bookingRoute)
+
 
 const port = 5555
 

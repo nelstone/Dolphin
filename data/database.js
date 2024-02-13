@@ -13,40 +13,38 @@ dotenv.config({path: './config.env'});
 }).promise();
 
 //Retrieves all Jobs from database
-export const getAllJobs = async() =>{
+export const getAllBookings = async() =>{
     const result = await pool.query(`
-    SELECT  jb.id, jb.name, jb.phone_nbr, jb.license_nbr, vt.vehicle_desc, mk.name as make_name, 
-    jb.model, jb. color, jb.date
-    FROM JOBS jb, VEHICLE_TYPES vt, MAKE mk
-    WHERE jb. vehicle_type_id  = vt.id
-    AND jb.make_id = mk.id
+    SELECT bo.first_nm, bo.last_nm, bo.email, bo.activity_id , bo.activity_dt,
+    bo.adlt_px , bo.child_px, bo.adlt_cost, bo.child_cost, act.name
+    FROM activites act, bookings bo
+    WHERE bo.activity_id = act.id
     `);
     const rows = result[0];
     return rows;
 }
 
 //Retrieves one single Job given an ID
-export const getSingleJob = async (id) =>{
+export const getSingleBooking = async (id) =>{
     const result = await pool.query(`
-    SELECT  jb.id, jb.name, jb.phone_nbr, jb.license_nbr, jb.vehicle_type_id, 
-    vt.vehicle_desc, jb.make_id, mk.name as make_name, jb.model, jb. color, jb.date
-    FROM JOBS jb, VEHICLE_TYPES vt, MAKE mk
-    WHERE jb. vehicle_type_id  = vt.id
-    AND jb.make_id = mk.id
-    AND jb.id = ?
+    SELECT bo.first_nm, bo.last_nm, bo.email, bo.activity_id , bo.activity_dt,
+    bo.adlt_px , bo.child_px, bo.adlt_cost, bo.child_cost, act.name
+    FROM activites act, bookings bo
+    WHERE bo.activity_id = act.id
+    AND bo.id = ?
     `,[id]);
     const rows = result[0];
     return rows[0];
 }
 
-export const createJob = async(oJob) =>{
+export const newBooking = async(oBooking) =>{
     const result = await pool.query(`
-    INSERT INTO JOBS (name, phone_nbr, license_nbr, 
-        vehicle_type_id, make_id, model, color, date)
-        VALUES(?, ?, ?, ?, ?, ?, ?, ?)
-    `,[oJob.name, oJob.phone_nbr, oJob.license_nbr,
-        oJob.vehicle_type_id, oJob.make_id, oJob.model, 
-        oJob.color, oJob.date]);
+    INSERT INTO JOBS 
+    (first_nm, last_nm, email, activity_id, activity_dt, adlt_px, child_px, adlt_cost, child_cost)
+    VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?)
+    `,[oBooking.first_nm, oBooking.last_nm, oBooking.activity_id,
+    oBooking.activity_dt, oBooking.adlt_px, oBooking.child_px, 
+    oBooking.adlt_cost, oBooking.child_cost ]);
     return result;       
 }
 
