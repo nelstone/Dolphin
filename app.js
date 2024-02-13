@@ -1,6 +1,7 @@
 import express from 'express';
 import morgan from 'morgan';
-import { getAllBookings, getSingleBooking, newBooking, getVehicleTypes, getVehicleMakes, updateJob, deleteJob } from './data/database.js';
+import { getAllJobs, getSingleJob, createJob, getVehicleTypes, getVehicleMakes, updateJob, deleteJob } from './data/database.js';
+import nodemailer from "nodemailer";
 
 const app = express();
 import {bookingRoute} from './routes/bookingRoute.js'
@@ -14,8 +15,10 @@ app.use(morgan('dev'));
 
 app.set("view engine", "ejs");
 
+app.use(express.json());
 //Needed to interpret form field values from post
 app.use(express.urlencoded({extended: true}));
+
 
 //==================================================
 //          P A G E    V I E W S 
@@ -25,6 +28,13 @@ app.use(express.urlencoded({extended: true}));
 app.get('/Dolphin-Cove', async(req, res) =>{
     res.render('Dolphin-Cove',{title:"DOLPHIN COVE"} );
 });
+
+
+// ACTION TO ACCEPT AND SEND EMAIL
+
+
+
+
 // app.get('/', async(req, res) =>{
 //     const results = await getAllJobs();
 //     res.render('index', {data: results});
