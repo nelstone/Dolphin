@@ -8,7 +8,8 @@
     <link rel="icon" type="image" href="/icon.jpg">
     <link rel="stylesheet" href="/home-page.css">
     <link rel="stylesheet" href="/slide.css">
-    <script src="/scripts/script.js"></script>
+    <script src="/scripts/script.js" defer></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
   </head>
   <body>
     <div class="main-container">
@@ -91,18 +92,64 @@
     <h5 style="text-align: center; color: #fff;">Make Your Reservation</h5>
     <div class="input-content">
 
-      <form action="#" method="post" >
+      <form action="/send_booking" method="post" >
+
+        <div class="selection" id="scheduleselector">
+            <h3 class="selection-header">SELECT SCHEDULE</h3>
+                <div class="radio-box">
+                  <input type="radio" id="9-11" name="scheduleoption" value="9-11">
+                  <label for="9-10">9:00 AM to 11:00AM</label>
+                </div>
+                <div class="radio-box">
+                  <input type="radio" id="11-1" name="scheduleoption" value="11-1">
+                  <label for="11-1">11:00 AM to 1:00PM</label>
+                </div>
+                <div class="radio-box">
+                  <input type="radio" id="1-3" name="scheduleoption" value="1-3">
+                  <label for="1-3">1:00 PM to 3:00PM</label>
+                </div>
+                <div class="radio-box">
+                  <input type="radio" id="3-5" name="scheduleoption" value="3-5">
+                  <label for="3-5">3:00 PM to 5:00PM</label>
+                </div>
+          <p id="schedule-btn" onclick="selectSchedule()" class="selection-btn">SELECT SCHEDULE</p>
+          <span class="error-prompt" id="schedule-error"></span>
+        </div>
+
+        <div class="selection" id="activityselector">
+          <h3 class="selection-header">SELECT ACTIVITY</h3>
+              <div class="radio-box">
+                <input type="radio" id="royalswim" name="activityoption" value="royalswim">
+                <label for="royalswim">DOLPHIN ROYAL SWIM</label>
+              </div>
+              <div class="radio-box">
+                <input type="radio" id="swimadventure" name="activityoption" value="swimadventure">
+                <label for="swimadventure">DOLPHIN SWIM ADVENTURE</label>
+              </div>
+              <div class="radio-box">
+                <input type="radio" id="encouter" name="activityoption" value="encouter">
+                <label for="encouter">ENCOUTER</label>
+              </div>
+              <div class="radio-box">
+                <input type="radio" id="dolphinday" name="activityoption" value="dolphinday">
+                <label for="dolphinday">A DAY AT DOLPHIN COVE </label>
+              </div>
+        <p id="activity-btn" onclick="selectActivity()" class="selection-btn">SELECT ACTIVITY</p>
+        <span class="error-prompt" id="activity-error"></span>
+        
+      </div>
+
         <div class="row">
             <div class="col">
                   <div class="mb-3">
                     <label for="l1" class="form-label">First Name :</label>
-                    <input class="form-control" type="text" id="l1" placeholder="--firstname--" >
+                    <input class="form-control" type="text" id="lastname" name="firstname" placeholder="--firstname--" required>
                 </div>
             </div>
             <div class="col">
                 <div class="mb-3">
                     <label for="l1" class="form-label">Last Name</label>
-                    <input class="form-control" type="text" id="l1" placeholder="--lastname--">
+                    <input class="form-control" type="text" id="lastname" name="lastname" placeholder="--lastname--" required>
                     </div>
             </div>
         </div>
@@ -110,13 +157,13 @@
             <div class="col">
                   <div class="mb-3">
                     <label for="l1" class="form-label">Email :</label>
-                    <input class="form-control" type="email" id="l1" placeholder="--email--" >
+                    <input class="form-control" type="email" id="email" name="email" placeholder="--email--" required>
                 </div>
             </div>
             <div class="col">
                 <div class="mb-3">
-                    <label for="l1" class="form-label">Shedule :</label>
-                    <input class="form-control" type="text" id="l1" placeholder="--shedule--">
+                    <label for="l1" class="form-label">Schedule :</label>
+                    <input class="form-control" type="text" name="schedule" id="schedule-input" onfocus="displaySchedules()" placeholder="--schedule--" required>
                     </div>
             </div>
         </div>
@@ -124,30 +171,32 @@
             <div class="col">
                   <div class="mb-3">
                     <label for="l1" class="form-label">Choose the Activity :</label>
-                    <input class="form-control" type="text" id="l1" placeholder="--activity--" >
+                    <input class="form-control" type="text" id="activities-input" name="activity" onfocus="showActivities()" placeholder="--activity--" required>
                 </div>
             </div>
             <div class="col">
                 <div class="mb-3">
-                    <label for="l1" class="form-label">Adult PCKG :</label>
-                    <input class="form-control" type="text" id="l1" placeholder="--adult packages--">
+                  &nbsp;&nbsp;<i id="adult-" class="fa fa-minus-circle" style="font-size:16px">&nbsp;&nbsp;</i><label for="l1" class="form-label">Number of Adults</label>&nbsp;&nbsp;<i class="fa fa-plus-circle" style="font-size:16px" id="adult+"></i>
+                    <input class="form-control" type="text" id="AdultNo" name="totalAdults" placeholder="--number of adults--" required readonly>
                     </div>
             </div>
         </div>
         <div class="row">
             <div class="col">
                   <div class="mb-3">
-                    <label for="l1" class="form-label">Children PCKG :</label>
-                    <input class="form-control" type="email" id="l1" placeholder="--children packages--" >
+                    &nbsp;&nbsp;<i id="child-" class="fa fa-minus-circle" style="font-size:16px">&nbsp;&nbsp;</i><label for="l1" class="form-label">Number of Children</label>&nbsp;&nbsp;<i class="fa fa-plus-circle" style="font-size:16px" id="child+"></i>
+                    <input class="form-control" name="totalChildren" type="text" id="ChildNo" placeholder="--number of children--" required readonly>
                 </div>
             </div>
             <div class="col">
                 <div class="mb-3">
                     <label for="l1" class="form-label">Date :</label>
-                    <input class="form-control" type="text" id="l1" placeholder="--date--">
+                    <input class="form-control" type="date" name="date" id="date" placeholder="--date--">
                     </div>
             </div>
         </div>
+        </div>
+        <span id="totalprice" style="color: red;">50000</span>
         <input type="submit" value="Book Now" id="btn">
         </form>
     </div>

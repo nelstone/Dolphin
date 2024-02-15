@@ -1,7 +1,9 @@
 import express from 'express';
 import morgan from 'morgan';
-import { getAllJobs, getSingleJob, createJob, getVehicleTypes, getVehicleMakes, updateJob, deleteJob } from './data/database.js';
+// import { getAllJobs, getSingleJob, createJob, getVehicleTypes, getVehicleMakes, updateJob, deleteJob } from './data/database.js';
 import nodemailer from "nodemailer";
+import session from 'express-session';
+import bodyParser from 'body-parser';
 
 const app = express();
 import {bookingRoute} from './routes/bookingRoute.js'
@@ -15,9 +17,18 @@ app.use(morgan('dev'));
 
 app.set("view engine", "ejs");
 
-app.use(express.json());
+app.use(bodyParser.json());
 //Needed to interpret form field values from post
-app.use(express.urlencoded({extended: true}));
+app.use(bodyParser.urlencoded({extended: false}));
+
+app.use(session({
+  secret: "secret key",
+  resave: false,
+  saveUninitialized: true,
+  cookie:{
+      maxAge:600000
+  }
+}));
 
 
 //==================================================
@@ -31,7 +42,46 @@ app.get('/Dolphin-Cove', async(req, res) =>{
 
 
 // ACTION TO ACCEPT AND SEND EMAIL
+app.post('/send_booking', async (req,res) => {
 
+  let firstname = req.body.firstname;
+  let lastname = req.body.lastname;
+  let email = req.body.email;
+  let schedule = req.body.schedule;
+  let activity = req.body.activity;
+  let adults = req.body.totalAdults;
+  let children = req.body.totalChildren;
+  let date = req.body.date;
+
+  var transporter = nodemailer.createTransport({
+    host: "sandbox.smtp.mailtrap.io",
+    port: 2525,
+    auth: {
+      user: "dd3e3f884bfedc",
+      pass: "449360dfb638cc"
+    }
+  });
+
+
+
+  var mailOptions = {
+    from: firstname + ' ' + lastname,
+    to: 'glassesdaniel@gmail.com',
+    subject: `Booking for ${date} by ${firstname} ${lastname}`,
+    text: `This is to confirm that ${firstname} is paying for a total of \n ${adults} Adults and ${children} Children. Activity chosen is ${activity} and is booked
+          for ${schedule} on ${date}. See attachment below for receipt.`
+  }
+transporter.sendMail(mailOptions, function(error, info){
+  if(error){
+    console.log(error)
+  }else{
+    console.log("Email send: " + info.response)
+  }
+  res.redirect('/Dolphin-Cove');
+})
+
+
+});
 
 
 
