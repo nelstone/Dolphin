@@ -1,5 +1,5 @@
 import express from 'express';
-import { getAllBookings, getSingleBooking, newBooking, getVehicleTypes, getVehicleMakes, updateJob, deleteJob } from '../data/database.js';
+import { getAllBookings, getSingleBooking, newBooking } from '../data/database.js';
 export const bookingRoute = express.Router();
 
 

@@ -91,60 +91,80 @@
     <h5 style="text-align: center; color: #fff;">Make Your Reservation</h5>
     <div class="input-content">
 
-      <form action="#" method="post" >
+      <form action="/Dolphin-Cove/save-booking" method="post" enctype="multipart/form-data">
         <div class="row">
             <div class="col">
                   <div class="mb-3">
-                    <label for="l1" class="form-label">First Name :</label>
-                    <input class="form-control" type="text" id="l1" placeholder="--firstname--" >
+                    <label for="first_nm" class="form-label">First Name :</label>
+                    <input class="form-control" type="text" name="first_nm" id="l1" placeholder="--firstname--" >
                 </div>
             </div>
             <div class="col">
                 <div class="mb-3">
-                    <label for="l1" class="form-label">Last Name</label>
-                    <input class="form-control" type="text" id="l1" placeholder="--lastname--">
+                    <label for="last_nm" class="form-label">Last Name</label>
+                    <input class="form-control" type="text" name="last_nm" id="l1" placeholder="--lastname--">
                     </div>
             </div>
         </div>
         <div class="row">
             <div class="col">
                   <div class="mb-3">
-                    <label for="l1" class="form-label">Email :</label>
-                    <input class="form-control" type="email" id="l1" placeholder="--email--" >
+                    <label for="email" class="form-label">Email :</label>
+                    <input class="form-control" type="email" name="email" id="l1" placeholder="--email--" >
                 </div>
             </div>
             <div class="col">
                 <div class="mb-3">
-                    <label for="l1" class="form-label">Shedule :</label>
-                    <input class="form-control" type="text" id="l1" placeholder="--shedule--">
+                    <label for="schedule" class="form-label">Shedule :</label>
+                    <!-- <input class="form-control" type="text" id="l1" placeholder="--shedule--"> -->
+                    <select name="schedule" id="" class="form-control">
+                      <option value="">--shedule--</option>
+                      <% for(let i = 0; i < skdData.length; i++) { %>
+                        <% if(skdData[i].id == skdData.morning_sess_1) { %>
+                          <option value="<%= skdData[i].id %>" selected> <%= skdData[i].morning_sess_1 %> </option>
+                        <% }else{ %>
+                            <option value="<%= skdData[i].id %>"> <%= skdData[i].morning_sess_1 %> </option>
+                        <% } %>
+                      <% } %>
+                    </select>
                     </div>
             </div>
         </div>
         <div class="row">
             <div class="col">
                   <div class="mb-3">
-                    <label for="l1" class="form-label">Choose the Activity :</label>
-                    <input class="form-control" type="text" id="l1" placeholder="--activity--" >
+                    <label for="name" class="form-label">Choose the Activity :</label>
+                    <!-- <input class="form-control" type="text" id="l1" placeholder="--activity--" > -->
+                    <select name="name" id="" class="form-control">
+                      <option value="">--Activity--</option>
+                      <% for(let i = 0; i < data.length; i++) { %>
+                        <% if(data[i].id == data.name) { %>
+                          <option value="<%= data[i].id %>" selected> <%= data[i].name %> </option>
+                        <% }else{ %>
+                            <option value="<%= data[i].id %>"> <%= data[i].name %> </option>
+                        <% } %>
+                      <% } %>
+                    </select>
                 </div>
             </div>
             <div class="col">
                 <div class="mb-3">
-                    <label for="l1" class="form-label">Adult PCKG :</label>
-                    <input class="form-control" type="text" id="l1" placeholder="--adult packages--">
+                    <label for="adlt_px" class="form-label">Adult PCKG :</label>
+                    <input class="form-control" type="text" name="adlt_px" id="l1" placeholder="--adult packages--">
                     </div>
             </div>
         </div>
         <div class="row">
             <div class="col">
                   <div class="mb-3">
-                    <label for="l1" class="form-label">Children PCKG :</label>
-                    <input class="form-control" type="email" id="l1" placeholder="--children packages--" >
+                    <label for="child_px" class="form-label">Children PCKG :</label>
+                    <input class="form-control" type="email" name="child_px" id="l1" placeholder="--children packages--" >
                 </div>
             </div>
             <div class="col">
                 <div class="mb-3">
-                    <label for="l1" class="form-label">Date :</label>
-                    <input class="form-control" type="text" id="l1" placeholder="--date--">
+                    <label for="activity_dt" class="form-label">Date :</label>
+                    <input class="form-control" type="date" name="activity_dt" id="l1" placeholder="--date--">
                     </div>
             </div>
         </div>
