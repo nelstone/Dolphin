@@ -1,6 +1,6 @@
 import express from 'express';
 import morgan from 'morgan';
-// import { getAllJobs, getSingleJob, createJob, getVehicleTypes, getVehicleMakes, updateJob, deleteJob } from './data/database.js';
+import { getActivity, getAllBookings, getSingleBooking, newBooking, deleteBooking, getSchedule } from './data/database.js';
 import nodemailer from "nodemailer";
 import session from 'express-session';
 import bodyParser from 'body-parser';
@@ -37,8 +37,33 @@ app.use(session({
 
 //Default route showing list of Jobs
 app.get('/Dolphin-Cove', async(req, res) =>{
-    res.render('Dolphin-Cove',{title:"DOLPHIN COVE"} );
+  const results = await getActivity();
+  const bookings = await getAllBookings();
+  const skd = await getSchedule();
+  res.render('Dolphin-Cove',{data: results, skdData: skd, bookingData: bookings, title:"DOLPHIN COVE"} );
 });
+
+
+// ========================ACTION ROUTE==========================
+
+app.post('/Dolphin-Cove/save-booking', async (req,res) =>{
+  const bookingObject = new Object();
+
+  bookingObject.first_nm = req.body.first_nm
+  bookingObject.last_nm = req.body.last_nm
+  bookingObject.email = req.body.email
+  bookingObject.morning_sess_1 = req.body.schedule
+  bookingObject.activities = req.body.name
+
+  bookingObject.adlt_px = req.body.adlt_px
+  bookingObject.child_px = req.body.child_px
+  
+  bookingObject.activity_dt = req.body.activity_dt
+
+  const results = await newBooking(bookingObject);
+  res.redirect('/Dolphin-Cove');
+})
+
 
 
 // ACTION TO ACCEPT AND SEND EMAIL
