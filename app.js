@@ -4,6 +4,7 @@ import { getActivity, getAllBookings, getSingleBooking, newBooking, deleteBookin
 import nodemailer from "nodemailer";
 import session from 'express-session';
 import bodyParser from 'body-parser';
+import path from 'path';
 
 const app = express();
 import {bookingRoute} from './routes/bookingRoute.js'
@@ -46,23 +47,23 @@ app.get('/Dolphin-Cove', async(req, res) =>{
 
 // ========================ACTION ROUTE==========================
 
-app.post('/Dolphin-Cove/save-booking', async (req,res) =>{
-  const bookingObject = new Object();
+// app.post('/Dolphin-Cove/save-booking', async (req,res) =>{
+//   const bookingObject = new Object();
 
-  bookingObject.first_nm = req.body.first_nm
-  bookingObject.last_nm = req.body.last_nm
-  bookingObject.email = req.body.email
-  bookingObject.morning_sess_1 = req.body.schedule
-  bookingObject.activities = req.body.name
+//   bookingObject.first_nm = req.body.first_nm
+//   bookingObject.last_nm = req.body.last_nm
+//   bookingObject.email = req.body.email
+//   bookingObject.morning_sess_1 = req.body.schedule
+//   bookingObject.activities = req.body.name
 
-  bookingObject.adlt_px = req.body.adlt_px
-  bookingObject.child_px = req.body.child_px
+//   bookingObject.adlt_px = req.body.adlt_px
+//   bookingObject.child_px = req.body.child_px
   
-  bookingObject.activity_dt = req.body.activity_dt
+//   bookingObject.activity_dt = req.body.activity_dt
 
-  const results = await newBooking(bookingObject);
-  res.redirect('/Dolphin-Cove');
-})
+//   const results = await newBooking(bookingObject);
+//   res.redirect('/Dolphin-Cove');
+// })
 
 
 
@@ -88,13 +89,12 @@ app.post('/send_booking', async (req,res) => {
   });
 
 
-
   var mailOptions = {
     from: firstname + ' ' + lastname,
     to: 'glassesdaniel@gmail.com',
     subject: `Booking for ${date} by ${firstname} ${lastname}`,
     text: `This is to confirm that ${firstname} is paying for a total of \n ${adults} Adults and ${children} Children. Activity chosen is ${activity} and is booked
-          for ${schedule} on ${date}. See attachment below for receipt.`
+    for ${schedule} on ${date}. See attachment below for receipt.`
   }
 transporter.sendMail(mailOptions, function(error, info){
   if(error){
@@ -105,101 +105,23 @@ transporter.sendMail(mailOptions, function(error, info){
   res.redirect('/Dolphin-Cove');
 })
 
+const bookingObject = new Object();
+
+  bookingObject.first_nm = req.body.firstname
+  bookingObject.last_nm = req.body.lastname
+  bookingObject.email = req.body.email
+  bookingObject.activity_id = req.body.activity 
+  bookingObject.morning_sess_1 = req.body.schedule
+
+  bookingObject.adlt_px = req.body.totalAdults
+  bookingObject.child_px = req.body.totalChildren
+  
+  bookingObject.activity_dt = req.body.date
+
+  const results = await newBooking(bookingObject);
 
 });
 
-
-
-// app.get('/', async(req, res) =>{
-//     const results = await getAllJobs();
-//     res.render('index', {data: results});
-// });
-
-// app.get('/job-view/:id', async (req,res)=>{
-//     const id = req.params.id;
-//     const result = await getSingleJob(id);
-//     res.status(200).render("view-job", {data: result});
-//     });
-
-// //Route to display the form needed to create a new Job
-// app.get('/create-job', async (req, res)=>{
-//     const vTypes = await getVehicleTypes();
-//     const vMakes = await getVehicleMakes();
-//     res.render('create-job', {data: vTypes, make: vMakes});
-// });
-
-// app.get('/job-edit/:id', async(req, res)=>{
-    
-//     const id = req.params.id;
-//     const vTypes = await getVehicleTypes();
-//     const vMakes = await getVehicleMakes();
-//     const result = await getSingleJob(id);
-
-//     console.log(result.date)
-//     //Convert DB Date to HTML Date
-//     let vDate = new Date(result.date);
-//     result.date = vDate.toISOString().split('T')[0];
-    
-//     res.render('edit-job', {data: result, v_type: vTypes, v_make: vMakes});
-// });
-// app.get('/job-delete/:id', async(req, res)=>{
-    
-//     const id = req.params.id;
-//     const vTypes = await getVehicleTypes();
-//     const vMakes = await getVehicleMakes();
-//     const result = await getSingleJob(id);
-
-//     console.log(result.date)
-//     //Convert DB Date to HTML Date
-//     let vDate = new Date(result.date);
-//     result.date = vDate.toISOString().split('T')[0];
-    
-//     res.render('delete-job', {data: result, v_type: vTypes, v_make: vMakes});
-// });
-
-
-// //==================================================
-// //          D B    A C T I O N S 
-// //==================================================
-
-// app.post('/save-job', async (req, res) =>{
-   
-//     const oJob = new Object();
-//     oJob.name = req.body.name;
-//     oJob.phone_nbr = req.body.phone_nbr;
-//     oJob.license_nbr = req.body.license_nbr;
-//     oJob.vehicle_type_id = req.body.vehicle_desc;
-//     oJob.make_id = req.body.make_name;
-//     oJob.model = req.body.model;
-//     oJob.color = req.body.color;
-//     oJob.date = new Date(req.body.date);
-
-//     const result = await createJob(oJob);
-//     res.redirect('/');
-// });
-
-// app.post('/update-job', async (req, res) =>{
-//     const oJob = new Object();
-//     oJob.name = req.body.name;
-//     oJob.phone_nbr = req.body.phone_nbr;
-//     oJob.license_nbr = req.body.license_nbr;
-//     oJob.vehicle_type_id = req.body.vehicle_desc;
-//     oJob.make_id = req.body.make_name;
-//     oJob.model = req.body.model;
-//     oJob.color = req.body.color;
-//     oJob.date = new Date(req.body.date);
-//     oJob.id = req.body.id;
-
-//     const result = await updateJob(oJob);
-//     res.redirect('/');
-// });
-
-// app.post('/delete-job', async (req, res) =>{
-//     const id = req.body.id;
-//     const retVal= await deleteJob(id);
-//     res.redirect('/');
-  
-//   });
 
 
 app.use(express.static("public"));

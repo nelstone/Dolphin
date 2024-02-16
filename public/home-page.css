@@ -127,6 +127,7 @@ color: #000;
     height: 400vh;
     padding: 30px;
     margin-top: 1vh;
+    border: px solid red;
 }
 .sub-content{
     border: px solid green;
@@ -173,7 +174,9 @@ color: #000;
     width: 200px;
     font-size: 1.2em;
     font-weight: bold;
-    margin-left: 100px;
+    position: relative;
+    bottom: 90px;
+    margin-left: 125px;
     background:linear-gradient(aqua, blue) ;
 }
 #btn:hover{
@@ -181,7 +184,7 @@ color: #000;
     color: #fff;
 }
 .content2{
-    border: px solid blue;
+    border: px solid pink;
     height: 142vh;
     width: 92.5vh;
     margin-top: 8vh;
@@ -196,6 +199,7 @@ color: #000;
     justify-content: space-around;
     align-items: center;
     padding: 40px;
+    margin-top: 30px;
 }
 
 #check{
@@ -272,7 +276,7 @@ li{
 }
 .content7{
     border: px solid purple;
-    height: 104vh;
+    height: 95vh;
     padding: 20px;
     background-color:#001f60 ;
 

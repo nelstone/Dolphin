@@ -12,7 +12,7 @@ dotenv.config({path: './config.env'});
     database: process.env.DB_NAME,
 }).promise();
 
-//Retrieves all Jobs from database
+//Retrieves all Bookings from database
 export const getAllBookings = async() =>{
     const result = await pool.query(`
     SELECT bo.first_nm, bo.last_nm, bo.email, bo.activity_id , bo.activity_dt,
@@ -24,7 +24,7 @@ export const getAllBookings = async() =>{
     return rows;
 }
 
-//Retrieves one single Job given an ID
+//Retrieves a single booking using id 
 export const getSingleBooking = async (id) =>{
     const result = await pool.query(`
     SELECT bo.first_nm, bo.last_nm, bo.email, bo.activity_id , bo.activity_dt,
@@ -37,14 +37,14 @@ export const getSingleBooking = async (id) =>{
     return rows[0];
 }
 
+// Creates a new Booking
 export const newBooking = async(oBooking) =>{
     const result = await pool.query(`
     INSERT INTO bookings 
-    (first_nm, last_nm, email, activity_id, activity_dt, adlt_px, child_px, adlt_cost, child_cost)
-    VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?)
-    `,[oBooking.first_nm, oBooking.last_nm, oBooking.activity_id,
-    oBooking.activity_dt, oBooking.adlt_px, oBooking.child_px, 
-    oBooking.adlt_cost, oBooking.child_cost ]);
+    (first_nm, last_nm, email, activity_id, activity_dt, adlt_px, child_px)
+    VALUES(?, ?, ?, ?, ?, ?, ?)
+    `,[oBooking.first_nm, oBooking.last_nm, oBooking.email, oBooking.activity_id,
+    oBooking.activity_dt, oBooking.adlt_px, oBooking.child_px ]);
     return result;       
 }
 
