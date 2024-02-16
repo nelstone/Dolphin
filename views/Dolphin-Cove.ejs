@@ -92,7 +92,7 @@
     <h5 style="text-align: center; color: #fff;">Make Your Reservation</h5>
     <div class="input-content">
 
-      <form action="/send_booking" method="post" >
+      <form action="/send_booking" method="post" id="booking-form">
 
         <div class="selection" id="scheduleselector">
             <h3 class="selection-header">SELECT SCHEDULE</h3>
@@ -119,19 +119,19 @@
         <div class="selection" id="activityselector">
           <h3 class="selection-header">SELECT ACTIVITY</h3>
               <div class="radio-box">
-                <input type="radio" id="royalswim" name="activityoption" value="royalswim">
+                <input type="radio" id="royalswim" name="activityoption" value="DOLPHIN ROYAL SWIM">
                 <label for="royalswim">DOLPHIN ROYAL SWIM</label>
               </div>
               <div class="radio-box">
-                <input type="radio" id="swimadventure" name="activityoption" value="swimadventure">
+                <input type="radio" id="swimadventure" name="activityoption" value="DOLPHIN SWIM ADVENTURE">
                 <label for="swimadventure">DOLPHIN SWIM ADVENTURE</label>
               </div>
               <div class="radio-box">
-                <input type="radio" id="encouter" name="activityoption" value="encouter">
-                <label for="encouter">ENCOUTER</label>
+                <input type="radio" id="encouter" name="activityoption" value="DOLPHIN ENCOUTER">
+                <label for="encouter">DOLPHIN ENCOUTER</label>
               </div>
               <div class="radio-box">
-                <input type="radio" id="dolphinday" name="activityoption" value="dolphinday">
+                <input type="radio" id="dolphinday" name="activityoption" value="A DAY AT DOLPHIN COVE">
                 <label for="dolphinday">A DAY AT DOLPHIN COVE </label>
               </div>
         <p id="activity-btn" onclick="selectActivity()" class="selection-btn">SELECT ACTIVITY</p>
@@ -197,7 +197,7 @@
         </div>
         </div>
         <span id="totalprice" style="color: red;">50000</span>
-        <input type="submit" value="Book Now" id="btn">
+        <input type="submit" value="Book Now" id="submit-btn" disabled>
         </form>
     </div>
 </div>
