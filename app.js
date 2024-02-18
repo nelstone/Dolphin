@@ -2,8 +2,10 @@ import express from 'express';
 import morgan from 'morgan';
 import { getActivity, getAllBookings, getSingleBooking, newBooking, deleteBooking, getSchedule } from './data/database.js';
 import nodemailer from "nodemailer";
+import Handlebars from 'handlebars';
 import session from 'express-session';
 import bodyParser from 'body-parser';
+import fs from 'fs';
 import path from 'path';
 
 const app = express();
@@ -88,13 +90,24 @@ app.post('/send_booking', async (req,res) => {
     }
   });
 
-
+  const source = fs.readFileSync('email_template.html', 'utf-8').toString();
+  const template = Handlebars.compile(source);
+  const replacement = {
+    fullName: firstname +' '+ lastname,
+    email: email,
+    schedule: schedule,
+    activity: activity,
+    adults: adults,
+    children: children,
+    date: date
+  }
+  const htmlToSend = template(replacement);
   var mailOptions = {
     from: firstname + ' ' + lastname,
     to: 'glassesdaniel@gmail.com',
     subject: `Booking for ${date} by ${firstname} ${lastname}`,
-    text: `This is to confirm that ${firstname} is paying for a total of \n ${adults} Adults and ${children} Children. Activity chosen is ${activity} and is booked
-    for ${schedule} on ${date}. See attachment below for receipt.`
+    text: 'Hello world',
+    html: htmlToSend
   }
 transporter.sendMail(mailOptions, function(error, info){
   if(error){
