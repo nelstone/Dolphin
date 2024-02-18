@@ -109,11 +109,68 @@ function openModal() {
 let formInputsArray = [document.getElementById('firstname'),document.getElementById('lastname'), document.getElementById('email'), document.getElementById('schedule-input'), document.getElementById('activities-input'), document.getElementById('AdultNo'), document.getElementById('ChildNo'), document.getElementById('date')];
 
 
-  for(let k = 0; k < formInputsArray; k++){
-    if(formInputsArray[k].value.length == 0){
-      document.getElementById('totalprice').style.display = 'none';
-      alert(formInputsArray[2].value.length)
+  // for(let k = 0; k < formInputsArray; k++){
+  //   if(formInputsArray[k].value.length == 0){
+  //     document.getElementById('totalprice').style.display = 'none';
+  //     alert(formInputsArray[2].value.length)
+  //   }
+  // }
+
+function disabledSetting(){
+  if( document.getElementById('submit-btn').disabled == true || document.getElementById('submit-btn').disabled === true ){
+    document.getElementById('submit-btn').style.opacity = '0.5';
+  }
+}
+disabledSetting();
+
+
+function totalCalculator(){
+
+  let royalswim = '141.75';
+  let swimadventure = '111.75';
+  let encouter = '89.25';
+  let dolphinday = '35.10';
+
+  let adultNo = parseInt(document.getElementById('AdultNo').value);
+  let childNo = parseInt(document.getElementById('ChildNo').value);
+
+  let finalTotal = 0;
+  let adultTotal = 0;
+  let childTotal = 0;
+
+  let pricesArr = [royalswim, swimadventure, encouter, dolphinday]
+  let selectValuesArr = ['DOLPHIN ROYAL SWIM','DOLPHIN SWIM ADVENTURE', 'DOLPHIN ENCOUTER', 'A DAY AT DOLPHIN COVE'];
+
+  for(let i = 0; i < selectValuesArr.length; i++){
+    if(selectValuesArr[i] == document.getElementById('activities-input').value){
+      adultTotal = (pricesArr[i] * adultNo);
+      childTotal = (pricesArr[i] * childNo);
+      finalTotal = adultTotal + childTotal;
     }
   }
+  document.getElementById('totalprice').innerHTML = `ADULT TOTAL: ${adultTotal} <br> Children's Total: ${childTotal} <br> Final Total: ${finalTotal}`
+  
+}
+
+
+
+setInterval(() => {
+  let inputs = document.getElementsByClassName('form-control');
+  let disabledVal = false;
+
+  for(let i = 0; i < inputs.length; i++){
+    if(inputs[i].value == "" || inputs[i].value === "" || inputs[i].value == null || inputs[i].value === null){
+      disabledVal = false;
+    }else{
+      disabledVal = true;
+    }
+  }
+  if (disabledVal == true){
+    document.getElementById('submit-btn').style.opacity = '1';
+    document.getElementById('submit-btn').disabled = false;
+    totalCalculator();
+  }
+}, 6000);
+
 
 
