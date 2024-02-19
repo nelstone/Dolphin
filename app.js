@@ -2,8 +2,11 @@ import express from 'express';
 import morgan from 'morgan';
 import { getActivity, getAllBookings, getSingleBooking, newBooking, deleteBooking, getSchedule } from './data/database.js';
 import nodemailer from "nodemailer";
+import Handlebars from 'handlebars';
 import session from 'express-session';
 import bodyParser from 'body-parser';
+import fs from 'fs';
+import path from 'path';
 
 const app = express();
 import {bookingRoute} from './routes/bookingRoute.js'
@@ -46,23 +49,23 @@ app.get('/Dolphin-Cove', async(req, res) =>{
 
 // ========================ACTION ROUTE==========================
 
-app.post('/Dolphin-Cove/save-booking', async (req,res) =>{
-  const bookingObject = new Object();
+// app.post('/Dolphin-Cove/save-booking', async (req,res) =>{
+//   const bookingObject = new Object();
 
-  bookingObject.first_nm = req.body.first_nm
-  bookingObject.last_nm = req.body.last_nm
-  bookingObject.email = req.body.email
-  bookingObject.morning_sess_1 = req.body.schedule
-  bookingObject.activities = req.body.name
+//   bookingObject.first_nm = req.body.first_nm
+//   bookingObject.last_nm = req.body.last_nm
+//   bookingObject.email = req.body.email
+//   bookingObject.morning_sess_1 = req.body.schedule
+//   bookingObject.activities = req.body.name
 
-  bookingObject.adlt_px = req.body.adlt_px
-  bookingObject.child_px = req.body.child_px
+//   bookingObject.adlt_px = req.body.adlt_px
+//   bookingObject.child_px = req.body.child_px
   
-  bookingObject.activity_dt = req.body.activity_dt
+//   bookingObject.activity_dt = req.body.activity_dt
 
-  const results = await newBooking(bookingObject);
-  res.redirect('/Dolphin-Cove');
-})
+//   const results = await newBooking(bookingObject);
+//   res.redirect('/Dolphin-Cove');
+// })
 
 
 
@@ -87,14 +90,24 @@ app.post('/send_booking', async (req,res) => {
     }
   });
 
-
-
+  const source = fs.readFileSync('email_template.html', 'utf-8').toString();
+  const template = Handlebars.compile(source);
+  const replacement = {
+    fullName: firstname +' '+ lastname,
+    email: email,
+    schedule: schedule,
+    activity: activity,
+    adults: adults,
+    children: children,
+    date: date
+  }
+  const htmlToSend = template(replacement);
   var mailOptions = {
     from: firstname + ' ' + lastname,
     to: 'glassesdaniel@gmail.com',
     subject: `Booking for ${date} by ${firstname} ${lastname}`,
-    text: `This is to confirm that ${firstname} is paying for a total of \n ${adults} Adults and ${children} Children. Activity chosen is ${activity} and is booked
-          for ${schedule} on ${date}. See attachment below for receipt.`
+    text: 'Hello world',
+    html: htmlToSend
   }
 transporter.sendMail(mailOptions, function(error, info){
   if(error){
@@ -105,10 +118,22 @@ transporter.sendMail(mailOptions, function(error, info){
   res.redirect('/Dolphin-Cove');
 })
 
+const bookingObject = new Object();
+
+  bookingObject.first_nm = req.body.firstname
+  bookingObject.last_nm = req.body.lastname
+  bookingObject.email = req.body.email
+  bookingObject.activity_id = req.body.activity 
+  bookingObject.morning_sess_1 = req.body.schedule
+
+  bookingObject.adlt_px = req.body.totalAdults
+  bookingObject.child_px = req.body.totalChildren
+  
+  bookingObject.activity_dt = req.body.date
+
+  const results = await newBooking(bookingObject);
 
 });
-
-
 
 
 

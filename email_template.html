@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .header{
+            display: flex;
+            justify-content: center;
+        }
+        .headingLogo{
+            display: flex;
+            justify-content: center;
+            width: 300px;
+            height: 300px;
+        }
+        .endingLogo{
+            width: 10%;
+            border-radius: 50%;
+        }
+        .content{
+            font-size: 18px;
+            text-align: center;
+        }
+        .footerLogo{
+            display: flex;
+            justify-content: center;
+        }
+        h3{
+            text-align: center;
+        }
+        h1{
+            font-size: 32px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <img class="headingLogo" src="https://www.wordstream.com/wp-content/uploads/2022/07/thank-you-for-your-purchase-message-1.png" alt="Thank You">
+        </div>
+        <div class="content">
+            <h1>Greetings Mr, {{fullName}} </h1>
+            <p>
+                We at Dolphin Cove have succesfully recieved your reservation for {{activity}} scheduled at
+                {{schedule}} on the {{date}} for number of {{adults}} adults and {{children}} child or children.
+            </p>
+        </div>
+        <div class="footerLogo">
+            <img class="endingLogo" src="https://www.mayberryinv.com/wp-content/uploads/2019/06/dcove.jpg" alt="">
+        </div>
+        <h3>We are located at A1 Highway in the northwest Montego St.James</h3>
+    </div>
+</body>
+</html>
