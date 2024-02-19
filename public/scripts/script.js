@@ -37,6 +37,8 @@ function openModal() {
 
   function displaySchedules(){
     document.getElementById('scheduleselector').style.display = 'flex';
+    document.getElementById('totalprice').style.display = 'none';
+    document.getElementById('submit-btn').style.display = 'none';
   }
   function selectSchedule(){
     let scheduleOpts = document.getElementsByName('scheduleoption');
@@ -44,6 +46,8 @@ function openModal() {
       if(scheduleOpts[i].checked){
         document.getElementById('schedule-input').value = scheduleOpts[i].value;
         document.getElementById('scheduleselector').style.display = 'none';
+        document.getElementById('totalprice').style.display = 'block';
+        document.getElementById('submit-btn').style.display = 'block';
         document.getElementById('schedule-error').innerHTML = "";
       }
       else if(scheduleOpts[i].checked == false){
@@ -61,6 +65,8 @@ function openModal() {
 
   function showActivities(){
     document.getElementById('activityselector').style.display = 'flex';
+    document.getElementById('totalprice').style.display = 'none';
+    document.getElementById('submit-btn').style.display = 'none';
   }
 
   function selectActivity(){
@@ -68,6 +74,8 @@ function openModal() {
     for(let i = 0; i < activityOpts.length; i++){
       if(activityOpts[i].checked){
         document.getElementById('activityselector').style.display = 'none';
+        document.getElementById('totalprice').style.display = 'block';
+        document.getElementById('submit-btn').style.display = 'block';
         document.getElementById('activities-input').value = activityOpts[i].value;
       }
       else if (activityOpts[i].checked == false){
